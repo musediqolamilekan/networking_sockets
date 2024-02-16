@@ -1,0 +1,20 @@
+CC      = g++
+CFLAGS  = -g -c -Wall
+LDFLAGS = 
+SOURCES = server.cpp ../src/tcp_stream.cpp ../src/tcp_acceptor.cpp
+INCLUDES= -I.
+OBJECTS = $(SOURCES:.cpp=.o)
+TARGET  = server
+
+# Ensure the target depends on OBJECTS, not SOURCES, to avoid unnecessary recompilation
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+
+# This pattern rule is correctly defined for building .o files from .cpp files
+.cpp.o:
+	$(CC) $(CFLAGS) $(INCLUDES) $< -o $@
+
+clean:
+	rm -rf $(OBJECTS) $(TARGET)
